@@ -13,29 +13,29 @@ require 'minion'
 include Minion
 
 error do |exception,queue,message,headers|
-	puts "got an error processing queue #{queue}"
-	puts exception.message
-	puts exception.backtrace
+  puts "got an error processing queue #{queue}"
+  puts exception.message
+  puts exception.backtrace
 end
 
 logger do |msg|
-	puts "--> #{msg}"
+  puts "--> #{msg}"
 end
 
 job "math.incr" do |msg|
-	msg.content.to_i + 1
+  msg.content.to_i + 1
 end
 
 job "math.double" do |msg|
-	msg.content.to_i * 2
+  msg.content.to_i * 2
 end
 
 job "math.square" do |msg|
-	msg.content.to_i * msg.content.to_i
+  msg.content.to_i * msg.content.to_i
 end
 
 job "math.print" do |msg|
-	puts "NUMBER -----> #{msg.content}"
+  puts "NUMBER -----> #{msg.content}"
 end
 
 enqueue([ "math.incr", "math.double", "math.square", "math.incr", "math.double", "math.print" ], 3)

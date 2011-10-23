@@ -43,7 +43,7 @@ Its easy to push a job onto the queue.
 ```ruby
 Minion.enqueue("make.sandwich", { "for" => "me", "with" => "bread" })
 ```
-	
+  
 Minion expects a queue name (and will create it if needed). The second argument
 needs to be a hash.  
 
@@ -55,7 +55,7 @@ require 'minion'
 include Minion
 
 job "make.sandwich" do |args|
-	Sandwich.make(args["for"],args["with"])
+  Sandwich.make(args["for"],args["with"])
 end
 ```
 
@@ -68,12 +68,12 @@ queues when you enqueue.
 Minion.enqueue([ "make.sandwich", "eat.sandwich" ], "for" => "me")
 
 job "make.sandwich" do
-	# this return value is merged with for => me and sent to the next queue
-	{ "type" => "ham on rye" }  
+  # this return value is merged with for => me and sent to the next queue
+  { "type" => "ham on rye" }  
 end
 
 job "eat.sandwich" do |msg|
-	puts "I have #{msg.content["type"]} sandwich for #{msg.content["me"]}"
+  puts "I have #{msg.content["type"]} sandwich for #{msg.content["me"]}"
 end
 ```
 
@@ -86,7 +86,7 @@ on hand, it would be.
 
 ```ruby
 job "make.sandwich", :when => lambda { not Bread.out? } do
-	Sandwich.make
+  Sandwich.make
 end
 ```
 ## Batch Processing ##
@@ -97,7 +97,7 @@ you can use the "batch" options.  This will group messages into groups of
 
 ```ruby
 job "make.sandwich", :batch_size => 5 do |msg|
-	Sandwich.make_a_bunch msg.batch
+  Sandwich.make_a_bunch msg.batch
 end
 ```
 
@@ -106,16 +106,16 @@ it so:
 
 ```ruby
 job "make.sandwich", :batch_size => 5, :wait => true do |msg|
-	Sandwich.make_a_bunch msg.batch
+  Sandwich.make_a_bunch msg.batch
 end
 ```
-	
+  
 That'll wait indefinitely, but maybe you'll give up after a bit.  Just tell it
 how many seconds:
 
 ```ruby
 job "make.sandwich", :batch_size => 5, :wait => 5 do |msg|
-	Sandwich.make_a_bunch msg.batch
+  Sandwich.make_a_bunch msg.batch
 end
 ```
 
@@ -130,7 +130,7 @@ error handler is run and the job is removed from the queue.
 
 ```ruby
 error do |e|
-	puts "got an error! #{e}"
+  puts "got an error! #{e}"
 end
 ```
 
@@ -140,7 +140,7 @@ Minion logs to stdout via "puts".  You can specify a custom logger like this:
 
 ```ruby
 logger do |msg|
-	puts msg
+  puts msg
 end
 ```
 

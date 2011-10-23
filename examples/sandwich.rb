@@ -13,25 +13,25 @@ require 'minion'
 include Minion
 
 error do |exception,queue,message,headers|
-	puts "got an error processing queue #{queue}"
-	puts exception.message
-	puts exception.backtrace
+  puts "got an error processing queue #{queue}"
+  puts exception.message
+  puts exception.backtrace
 end
 
 job "add.bread" do |msg|
-	msg.content.merge("bread" => "sourdough")
+  msg.content.merge("bread" => "sourdough")
 end
 
 job "add.meat" do |msg|
-	msg.content.merge("meat" => "turkey")
+  msg.content.merge("meat" => "turkey")
 end
 
 job "add.condiments" do |msg|
-	msg.content.merge("condiments" => "mayo")
+  msg.content.merge("condiments" => "mayo")
 end
 
 job "eat.sandwich" do |msg|
-	puts "YUM!	A #{msg['meat']} on #{msg['bread']} sandwich with #{msg['condiments']}"
+  puts "YUM!  A #{msg['meat']} on #{msg['bread']} sandwich with #{msg['condiments']}"
 end
 
 enqueue(["add.bread", "add.meat", "add.condiments", "eat.sandwich" ])
