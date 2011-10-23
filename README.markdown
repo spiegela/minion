@@ -36,13 +36,16 @@ in parallel, run two minions.
 
 Its easy to push a job onto the queue.
 
+	```ruby
 	Minion.enqueue("make.sandwich", { "for" => "me", "with" => "bread" })
-
+	```
+	
 Minion expects a queue name (and will create it if needed). The second argument
 needs to be a hash.  
 
 ## Processing a job ##
 
+	```ruby
 	require 'minion'
 
 	include Minion
@@ -50,12 +53,14 @@ needs to be a hash.
 	job "make.sandwich" do |args|
 		Sandwich.make(args["for"],args["with"])
 	end
+	```
 
 ## Chaining multiple steps ##
 
 If you have a task that requires more than one step just pass an array of
 queues when you enqueue.
 
+	```ruby
 	Minion.enqueue([ "make.sandwich", "eat.sandwich" ], "for" => "me")
 
 	job "make.sandwich" do
@@ -66,6 +71,7 @@ queues when you enqueue.
 	job "eat.sandwich" do |msg|
 		puts "I have #{msg.content["type"]} sandwich for #{msg.content["me"]}"
 	end
+	```
 
 ## Conditional Processing ##
 
@@ -74,33 +80,40 @@ conditions there is a :when parameter that takes a lambda as an argument.  For
 example, if you had a queue that makes sandwiches but only if there is bread
 on hand, it would be.
 
+	```ruby
 	job "make.sandwich", :when => lambda { not Bread.out? } do
 		Sandwich.make
 	end
-
+	```
 ## Batch Processing ##
 
 If you want a minion worker to subscribe to a queue and batch messages together
 you can use the "batch" options.  This will group messages into groups of
 "batch_size" unless there are too few messages available.
 
+	```ruby
 	job "make.sandwich", :batch_size => 5 do |msg|
 		Sandwich.make_a_bunch msg.batch
 	end
+	```
 
 If you want your worker to wait until the exact batch_size is reached, then tell
 it so:
 
+	```ruby
 	job "make.sandwich", :batch_size => 5, :wait => true do |msg|
 		Sandwich.make_a_bunch msg.batch
 	end
-
+	```
+	
 That'll wait indefinitely, but maybe you'll give up after a bit.  Just tell it
 how many seconds:
 
+	```ruby
 	job "make.sandwich", :batch_size => 5, :wait => 5 do |msg|
 		Sandwich.make_a_bunch msg.batch
 	end
+	```
 
 This is especially helpful since any short delay can create some weird batch sizes.
 See the examples for more information.
@@ -111,17 +124,21 @@ When an error is thrown in a job handler, the job is requeued to be done later
 and the minion process exits.  If you define an error handler, however, the
 error handler is run and the job is removed from the queue.
 
+	```ruby
 	error do |e|
 		puts "got an error! #{e}"
 	end
+	```
 
 ## Logging ##
 
 Minion logs to stdout via "puts".  You can specify a custom logger like this:
 
+	```ruby
 	logger do |msg|
 		puts msg
 	end
+	```
 
 ## Testing ##
 
