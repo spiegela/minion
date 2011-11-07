@@ -10,19 +10,18 @@ Gem::Specification.new do |s|
   s.platform = Gem::Platform::RUBY
 
   s.required_rubygems_version = ">= 1.3.6"
-  s.authors = ["Orion Henry"]
+  s.authors = ["Orion Henry", "Aaron Spiegel", "Durran Jordan"]
   s.date = %q{2010-07-28}
   s.description = %q{Super simple job queue over AMQP}
-  s.email = %q{orion@heroku.com}
-  s.homepage = %q{http://github.com/orionz/minion}
+  s.email = %q{ruby-minion@googlegroups.com}
+  s.homepage = %q{http://github.com/ruby-minion/minion}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_path = "lib"
   s.rubyforge_project = %q{minion}
   s.rubygems_version = %q{1.3.6}
   s.summary = %q{Super simple job queue over AMQP}
 
-  s.extra_rdoc_files = [ "README.rdoc" ]
-  s.files = Dir.glob("lib/**/*") + %w(README.rdoc Rakefile)
+  s.files = Dir.glob("lib/**/*") + %w(Rakefile)
   s.test_files = Dir.glob("spec/**/*") + Dir.glob("examples/*")
 
   s.add_runtime_dependency("amqp", ["~> 0.7.4"])
