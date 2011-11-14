@@ -11,7 +11,7 @@ Minion pulls the AMQP credentials out the environment via AMQP_URL.
 
 Alternativly you can explicitly set it programmatically like this:
 
-	Minion.amqp_url = "amqp://johndoe:abc123@localhost/my_vhost"
+	Minion.url = "amqp://johndoe:abc123@localhost/my_vhost"
 
 If no URL is supplied, Minion defaults to "amqp://guest:guest@localhost/" which
 is the default credentials for Rabbitmq running locally.
