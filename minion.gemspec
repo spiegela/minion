@@ -9,14 +9,13 @@ Gem::Specification.new do |s|
   s.version = Minion::VERSION
   s.platform = Gem::Platform::RUBY
 
-  s.required_rubygems_version = ">= 1.3.6"
-  s.authors = ["Orion Henry", "Aaron Spiegel", "Durran Jordan"]
+  s.required_rubygems_version = Gem::Requirement.new("> 0.0") if s.respond_to? :required_rubygems_version=
+  s.authors = ["Orion Henry"]
   s.date = %q{2010-07-28}
-  s.description = %q{Super simple job queue over AMQP}
+  s.description = %q{Ruby jobs with AMQP}
   s.email = %q{ruby-minion@googlegroups.com}
   s.homepage = %q{http://github.com/ruby-minion/minion}
-  s.rdoc_options = ["--charset=UTF-8"]
-  s.require_path = "lib"
+  s.require_paths = ["lib"]
   s.rubyforge_project = %q{minion}
   s.rubygems_version = %q{1.3.6}
   s.summary = %q{Super simple job queue over AMQP}
@@ -27,9 +26,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency("amqp", ["~> 0.7.4"])
   s.add_runtime_dependency("bunny", ["~> 0.7.4"])
   s.add_runtime_dependency("json", [">= 1.2.0"])
-  s.add_runtime_dependency("activesupport", [">= 3.1"])
 
   s.add_development_dependency("mocha", ["= 0.9.8"])
   s.add_development_dependency("rspec", ["~> 2.4"])
-  s.add_development_dependency("watchr", ["~> 0.6"])
 end

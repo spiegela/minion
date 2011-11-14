@@ -2,7 +2,6 @@ PATH
   remote: .
   specs:
     minion (0.2.0)
-      activesupport (>= 3.1)
       amqp (~> 0.7.4)
       bunny (~> 0.7.4)
       json (>= 1.2.0)
@@ -50,15 +49,14 @@ GEM
       ruby-debug-base19 (>= 0.11.19)
     ruby_core_source (0.1.5)
       archive-tar-minitar (>= 0.5.2)
-    watchr (0.7)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  activesupport
   minion!
   mocha (= 0.9.8)
   rspec (~> 2.4)
   ruby-debug
   ruby-debug19
-  watchr (~> 0.6)

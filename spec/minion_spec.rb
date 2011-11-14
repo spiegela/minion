@@ -110,6 +110,41 @@ describe Minion do
             message.should == data
           end
         end
+        
+        context "without activesupport loaded" do
+          let(:data) do
+            {"content"=>{"field"=>"value"}}
+          end
+          
+          it "ActiveSupport::JSON should not be defined" do
+            defined?(ActiveSupport::JSON).should be_false
+          end
+          
+          it "should use the native JSON to serialize" do
+            JSON.expects(:dump).with(data).returns(data.to_json)
+            Minion.enqueue("minion.text", data)
+          end
+        end
+        
+        context "with activesupport loaded" do
+          
+          let(:data) do
+            {"content"=>{"field"=>"value"}}
+          end
+          
+          before do
+            require 'active_support/json'
+          end
+
+          it "ActiveSupport::JSON should be defined" do
+            defined?(ActiveSupport::JSON).should be_true
+          end
+
+          it "should use ActiveSupport::JSON to serialize" do
+            ActiveSupport::JSON.expects(:encode).with(data, nil).returns(data.to_json)
+          end
+          
+        end
 
         context "when the data contains special characters" do
 

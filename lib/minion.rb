@@ -67,10 +67,14 @@ module Minion
       queue = queues
     end
     
-    # @todo: Durran: Any multi-byte character in the JSON causes a bad_payload
-    #   error on the rabbitmq side. It seems a fix in the old amqp gem
-    #   regressed in the new fork.
-    encoded = JSON.dump(data).force_encoding("ISO-8859-1")
+    # Some versions of ActiveSupport conflict with native JSON encoding
+    encoded = defined?(ActiveSupport::JSON) ?
+      ActiveSupport::JSON.encode(data) : JSON.dump(data)
+      
+      # @todo: Durran: Any multi-byte character in the JSON causes a bad_payload
+      #   error on the rabbitmq side. It seems a fix in the old amqp gem
+      #   regressed in the new fork.
+    encoded.force_encoding("ISO-8859-1")
     
     Minion.info("Send: #{queue}:#{encoded}")
     connect do |bunny|
