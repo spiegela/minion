@@ -14,18 +14,18 @@ require 'minion'
 include Minion
 
 error do |exception,queue,message,headers|
-	puts "got an error processing queue #{queue}"
-	puts exception.message
-	puts exception.backtrace
+  puts "got an error processing queue #{queue}"
+  puts exception.message
+  puts exception.backtrace
 end
 
 logger do |msg|
-	puts "--> #{msg}"
+  puts "--> #{msg}"
 end
 
 
 job "do.many", :batch_size => 10 do |msg|
-	puts "got #{msg.batch.size} messages"
+  puts "got #{msg.batch.size} messages"
 end
 
 27.times{ Minion.enqueue 'do.many', {"something" => true} }

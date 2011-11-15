@@ -13,9 +13,9 @@ require 'minion'
 include Minion
 
 error do |exception,queue,message,headers|
-	puts "got an error processing queue #{queue}"
-	puts exception.message
-	puts exception.backtrace
+  puts "got an error processing queue #{queue}"
+  puts exception.message
+  puts exception.backtrace
 end
 
 MAKINGS = {
@@ -26,11 +26,11 @@ MAKINGS = {
 
 job "add.bread", :batch_size => 5 do |msg|
   puts "Puts making #{msg.batch.size} sandwiches"
-	msg.batch.map{|s| s.merge("bread" => MAKINGS['bread'].sample)}
+  msg.batch.map{|s| s.merge("bread" => MAKINGS['bread'].sample)}
 end
 
 job "add.meat" do |msg|
-	msg.map{|s| s.merge("meat" => MAKINGS['meat'].sample)}
+  msg.map{|s| s.merge("meat" => MAKINGS['meat'].sample)}
 end
 
 job "add.condiments" do |msg|

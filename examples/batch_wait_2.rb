@@ -18,13 +18,13 @@ require 'minion'
 include Minion
 
 error do |exception,queue,message,headers|
-	puts "got an error processing queue #{queue}"
-	puts exception.message
-	puts exception.backtrace
+  puts "got an error processing queue #{queue}"
+  puts exception.message
+  puts exception.backtrace
 end
 
 logger do |msg|
-	puts "--> #{msg}"
+  puts "--> #{msg}"
 end
 
 Thread.new do
