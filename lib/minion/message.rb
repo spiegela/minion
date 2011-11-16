@@ -51,7 +51,11 @@ module Minion
     end
     
     def to_json
-      JSON.dump(as_json || {}).force_encoding("ISO-8859-1")
+      decoded = JSON.dump(as_json || {})
+      if decoded.respond_to?(:force_encoding)
+        decoded = decoded.force_encoding()
+      end
+      decoded
     end
     
   end

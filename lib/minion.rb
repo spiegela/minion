@@ -6,7 +6,6 @@ require "uri"
 require "minion/handler"
 require "minion/version"
 require "minion/message"
-require "ext/string"
 
 module Minion
   extend self
@@ -74,7 +73,10 @@ module Minion
       # @todo: Durran: Any multi-byte character in the JSON causes a bad_payload
       #   error on the rabbitmq side. It seems a fix in the old amqp gem
       #   regressed in the new fork.
-    encoded.force_encoding("ISO-8859-1")
+    if encoded.respond_to?(:force_encoding)
+      encoded = encoded.force_encoding("ISO-8859-1")
+    end
+    
     
     Minion.info("Send: #{queue}:#{encoded}")
     connect do |bunny|
